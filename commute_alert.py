@@ -61,7 +61,38 @@ aqi = air_data["current"]["us_aqi"]
 # ---------------------------
 # 顯示查詢結果
 # ---------------------------
-print("預報日期：", date)
-print("最高溫度：", temperature, "°C")
-print("最高降雨機率：", rain_probability, "%")
-print("空氣品質 AQI：", aqi)
+# ---------------------------
+# 多條件智慧判斷
+# ---------------------------
+suggestions = []
+
+if rain_probability >= 60:
+    suggestions.append("☔ 降雨機率偏高，請攜帶雨傘")
+
+if temperature >= 33:
+    suggestions.append("🔥 今日高溫，請注意防曬並補充水分")
+
+if aqi >= 100:
+    suggestions.append("😷 空氣品質不佳，建議配戴口罩")
+
+# 如果所有數值都在正常範圍
+if not suggestions:
+    suggestions.append("✅ 今日天氣狀況良好，適合外出通勤")
+
+# 將建議清單組合成多行文字
+suggestion_text = "\n".join(suggestions)
+
+# 建立完整通知訊息
+message = f"""
+【台北市智慧通勤提醒】
+
+📅 預報日期：{date}
+🌡️ 最高溫度：{temperature}°C
+🌧️ 最高降雨機率：{rain_probability}%
+🌫️ 空氣品質 AQI：{aqi}
+
+【今日建議】
+{suggestion_text}
+""".strip()
+
+print(message)
