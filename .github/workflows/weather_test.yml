@@ -19,5 +19,8 @@ jobs:
       - name: Install requests
         run: pip install requests
 
-      - name: Run weather program
+      - name: Run weather and Telegram program
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: python commute_alert.py
