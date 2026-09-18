@@ -122,11 +122,22 @@ telegram_response = requests.post(
     timeout=10
 )
 
-telegram_response.raise_for_status()
+# 必須先顯示 Telegram 回應，再檢查錯誤
+print(
+    "Telegram 回應狀態：",
+    telegram_response.status_code,
+    flush=True
+)
 
-print("Telegram 回應狀態：", telegram_response.status_code)
-print("Telegram 回應內容：", telegram_response.text)
+print(
+    "Telegram 回應內容：",
+    telegram_response.text,
+    flush=True
+)
 
-telegram_response.raise_for_status()
+if telegram_response.status_code != 200:
+    raise RuntimeError(
+        f"Telegram 傳送失敗：{telegram_response.text}"
+    )
 
 print("Telegram 通勤提醒傳送成功！")
