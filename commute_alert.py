@@ -1,3 +1,4 @@
+import os
 import requests
 
 # 查詢地點：台北市
@@ -96,3 +97,31 @@ message = f"""
 """.strip()
 
 print(message)
+
+# ---------------------------
+# 傳送 Telegram 通知
+# ---------------------------
+telegram_bot_token = os.environ.get("TELEGRAM_BOT_TOKEN")
+telegram_chat_id = os.environ.get("TELEGRAM_CHAT_ID")
+
+if not telegram_bot_token or not telegram_chat_id:
+    raise ValueError("找不到 Telegram Bot Token 或 Chat ID")
+
+telegram_url = (
+    f"https://api.telegram.org/bot{telegram_bot_token}/sendMessage"
+)
+
+telegram_data = {
+    "chat_id": telegram_chat_id,
+    "text": message
+}
+
+telegram_response = requests.post(
+    telegram_url,
+    data=telegram_data,
+    timeout=10
+)
+
+telegram_response.raise_for_status()
+
+print("Telegram 通勤提醒傳送成功！")
