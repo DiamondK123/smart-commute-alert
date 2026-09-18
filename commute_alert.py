@@ -124,4 +124,9 @@ telegram_response = requests.post(
 
 telegram_response.raise_for_status()
 
+print("Telegram 回應狀態：", telegram_response.status_code)
+print("Telegram 回應內容：", telegram_response.text)
+
+telegram_response.raise_for_status()
+
 print("Telegram 通勤提醒傳送成功！")
